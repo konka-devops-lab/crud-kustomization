@@ -4,9 +4,8 @@ kind: Kustomization
 resources:
   - ../../base
 
-# Environment-specific customizations
 patches:
-  - patch.yaml
-
-# Optional: namespace for this environment
-# namespace: dev
+  - path: patch.yaml
+    target:
+      kind: StatefulSet
+      name: crud-mysql
