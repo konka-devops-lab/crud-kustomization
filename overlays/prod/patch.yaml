@@ -1,0 +1,118 @@
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-backend
+spec:
+  template:
+    metadata:
+      labels:
+        version: blue
+
+# env:
+#   - name: MYSQL_USER
+#     valueFrom:
+#       secretKeyRef:
+#         name: crud-backend-secret   # created by ESO
+#         key: MYSQL_USER
+#   - name: MYSQL_PASSWORD
+#     valueFrom:
+#       secretKeyRef:
+#         name: crud-backend-secret
+#         key: MYSQL_PASSWORD
+---
+# Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-frontend
+spec:
+  template:
+    metadata:
+      labels:
+        version: blue
+---
+# Redis StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: crud-redis
+spec:
+  template:
+    metadata:
+      labels:
+        version: blue
+---
+# MySQL StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: crud-mysql
+spec:
+  template:
+    metadata:
+      labels:
+        version: blue
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-frontend
+spec:
+  selector:
+    app: crud-frontend
+    version: blue
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-backend
+spec:
+  selector:
+    app: crud-backend
+    version: blue
+---
+# Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-redis
+spec:
+  selector:
+    app: crud-redis
+    version: blue
+---
+# MySQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: crud-mysql
+spec:
+  selector:
+    app: crud-mysql
+    version: blue
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: crud-backend-secret
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-secrets
+    kind: SecretStore
+  target:
+    name: crud-backend-secret      # Kubernetes Secret that will be created
+    creationPolicy: Merge
+  data:
+    - secretKey: MYSQL_USER
+      remoteRef:
+        key: /crud-app/mysql/user
+    - secretKey: MYSQL_PASSWORD
+      remoteRef:
+        key: /crud-app/mysql/password
+    - secretKey: MYSQL_ROOT_PASSWORD
+      remoteRef:
+        key: /crud-app/mysql/root-password
