@@ -12,8 +12,13 @@ spec:
       containers:
         - name: crud-mysql
           image: siva9666/crud:mysql-v1
-  volumeClaimTemplates:
+  vvolumeClaimTemplates:
     - metadata:
         name: mysql-storage
       spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
         storageClassName: standard
