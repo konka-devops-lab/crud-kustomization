@@ -38,10 +38,10 @@ spec:
           resources:
             requests:
               memory: "1Gi"
-              cpu: "500m"
+              cpu: "800m"
             limits:
               memory: "2Gi"
-              cpu: "700m"
+              cpu: "1000m"
 
           # Liveness probe (checks if app is alive)
           livenessProbe:
