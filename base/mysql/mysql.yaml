@@ -22,7 +22,7 @@ spec:
 
           # Environment variables
           env:
-            - name: root_password
+            - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: crud-secrets
