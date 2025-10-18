@@ -16,3 +16,11 @@ spec:
       containers:
         - name: crud-backend
           image: siva9666/crud:backend-v1
+      
+          livenessProbe:
+            httpGet:
+              path: /health
+          
+          readinessProbe:
+            httpGet:
+              path: /health
