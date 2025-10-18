@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: crud-config
 data:
-  MYSQL_DATABASE: crud_app
+  DB_NAME: crud_app
   DB_HOST: crud-mysql
   REDIS_HOST: crud-redis
   REDIS_SSL: "false"
