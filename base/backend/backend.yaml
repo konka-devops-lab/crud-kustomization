@@ -35,12 +35,14 @@ spec:
                   key: MYSQL_PASSWORD
 
           # Resource requests and limits
-          requests:
-            memory: "1Gi"
-            cpu: "800m"
-          limits:
-            memory: "2Gi"
-            cpu: "1000m"
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "700m"
+
           # Liveness probe (checks if app is alive)
           livenessProbe:
             httpGet:
