@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: crud-frontend
-          image: crud:frontend-v1
+          image: siva9666/crud:frontend-v1
